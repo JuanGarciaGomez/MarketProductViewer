@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -81,8 +82,6 @@ dependencies {
 
     implementation(libs.logging.interceptor)
     implementation(libs.glide.transformations)
-    //Shimmer
-    implementation(libs.shimmer)
 
     //Test
     testImplementation(libs.junit)
