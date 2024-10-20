@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.search.SearchProductFragment">
 
     <TextView
@@ -15,7 +16,6 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:text="@string/search_something"
         android:textSize="12sp" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

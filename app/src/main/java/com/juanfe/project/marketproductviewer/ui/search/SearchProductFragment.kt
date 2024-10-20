@@ -1,7 +1,6 @@
 package com.juanfe.project.marketproductviewer.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.databinding.FragmentSearchProductBinding
 import com.juanfe.project.marketproductviewer.ui.search.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,8 +63,11 @@ class SearchProductFragment : Fragment() {
             }
 
             is SearchProductViewState.Loading -> {
-                if (viewState.firstOpen) binding.progress.visibility = View.GONE
-                else {
+                if (viewState.firstOpen) {
+                    binding.progress.visibility = View.GONE
+                    binding.msgInformation.text =
+                        requireContext().getString(R.string.search_something)
+                } else {
                     productAdapter.updateList(listOf())
                     binding.msgInformation.visibility = View.GONE
                     binding.progress.visibility = View.VISIBLE
@@ -85,10 +89,10 @@ class SearchProductFragment : Fragment() {
     private fun setUpRecyclerView() {
         binding.productRv.layoutManager = LinearLayoutManager(requireContext())
 
-        //I can save de first search for when the user re open the app he have the last search
         productAdapter = ProductAdapter(listOf()) {
-            // findNavController().navigate(navigate)
-
+            val action =
+                SearchProductFragmentDirections.actionSearchProductFragmentToDetailFragment(it)
+            findNavController().navigate(action)
         }
         binding.productRv.adapter = productAdapter
     }

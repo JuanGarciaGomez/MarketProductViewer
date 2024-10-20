@@ -14,7 +14,7 @@ import com.juanfe.project.marketproductviewer.domain.ResultModel
 
 class ProductAdapter(
     private var list: List<ResultModel>,
-    private val onItemSelected: (String) -> Unit
+    private val onItemSelected: (ResultModel) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
 
     fun updateList(newList: List<ResultModel>) {
@@ -50,7 +50,7 @@ class ProductAdapter(
 
     class MyViewHolder(private val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ResultModel, onItemSelected: (String) -> Unit) {
+        fun bind(item: ResultModel, onItemSelected: (ResultModel) -> Unit) {
             binding.apply {
                 val freeDelivery = "Envio Gratis"
                 productTitle.text = item.title
@@ -64,12 +64,6 @@ class ProductAdapter(
                 }
                 productPrice.text = item.price.formatToCOP()
 
-                item.installments?.quantity?.let {
-                    productInstallments.text = it.toString()
-                } ?: run {
-                    productInstallments.visibility = View.GONE
-                }
-
                 if (item.shipping.freeShipping) {
                     productShipping.text = freeDelivery
                 } else {
@@ -77,6 +71,10 @@ class ProductAdapter(
                 }
 
                 productImg.loadProductImg(item.thumbnail)
+
+                product.setOnClickListener {
+                    onItemSelected.invoke(item)
+                }
             }
         }
 
