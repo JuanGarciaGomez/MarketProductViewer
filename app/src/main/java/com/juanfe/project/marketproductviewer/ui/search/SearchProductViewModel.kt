@@ -2,7 +2,7 @@ package com.juanfe.project.marketproductviewer.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juanfe.project.marketproductviewer.domain.ResultModel
+import com.juanfe.project.marketproductviewer.domain.ExceptionService
 import com.juanfe.project.marketproductviewer.domain.SearchModel
 import com.juanfe.project.marketproductviewer.domain.SearchProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,27 +40,14 @@ class SearchProductViewModel @Inject constructor(private val searchProductUseCas
     }
 
     private fun handleError(error: Throwable) {
+        val exception = error as ExceptionService
         error.printStackTrace()
-        _viewState.value = SearchProductViewState.Error
+        _viewState.value = SearchProductViewState.Error(errorMsg = exception.msgError)
     }
 
     private fun handleSuccess(searchProduct: SearchModel) {
-        val currentState = _viewState.value
         val productList = searchProduct.results
-        updateProductList(productList, currentState)
-    }
-
-
-    private fun updateProductList(
-        productList: List<ResultModel>,
-        currentState: SearchProductViewState
-    ) {
-        val updatedList = if (currentState is SearchProductViewState.Success) {
-            currentState.resultModel + productList
-        } else {
-            productList
-        }
-        _viewState.value = SearchProductViewState.Success(updatedList)
+        _viewState.value = SearchProductViewState.Success(productList)
     }
 
 }

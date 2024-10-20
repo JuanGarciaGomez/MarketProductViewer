@@ -52,8 +52,10 @@ class SearchProductFragment : Fragment() {
 
     private fun updateUi(viewState: SearchProductViewState) {
         when (viewState) {
-            SearchProductViewState.Error -> {
-                //show Error
+            is SearchProductViewState.Error -> {
+                binding.productRv.visibility = View.GONE
+                binding.msgInformation.visibility = View.VISIBLE
+                binding.msgInformation.text = viewState.errorMsg
             }
 
             SearchProductViewState.Loading -> {
@@ -61,8 +63,9 @@ class SearchProductFragment : Fragment() {
             }
 
             is SearchProductViewState.Success -> {
+                binding.productRv.visibility = View.VISIBLE
                 productAdapter.updateList(viewState.resultModel)
-                binding.productsEmpty.visibility = View.GONE
+                binding.msgInformation.visibility = View.GONE
             }
         }
     }

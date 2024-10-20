@@ -4,7 +4,7 @@ import com.juanfe.project.marketproductviewer.domain.ResultModel
 
 sealed class SearchProductViewState() {
     data object Loading : SearchProductViewState()
-    data object Error : SearchProductViewState()
+    data class Error(val errorMsg: String) : SearchProductViewState()
     data class Success(val resultModel: List<ResultModel>) :
         SearchProductViewState()
 
