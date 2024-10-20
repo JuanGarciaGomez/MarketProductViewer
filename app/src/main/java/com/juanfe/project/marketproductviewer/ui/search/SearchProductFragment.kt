@@ -1,6 +1,7 @@
 package com.juanfe.project.marketproductviewer.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,7 @@ class SearchProductFragment : Fragment() {
     private fun updateUi(viewState: SearchProductViewState) {
         when (viewState) {
             is SearchProductViewState.Error -> {
+                productAdapter.updateList(listOf())
                 binding.msgInformation.visibility = View.VISIBLE
                 binding.msgInformation.text = viewState.errorMsg
                 hideLoading(visibleRv = false)
@@ -62,6 +64,7 @@ class SearchProductFragment : Fragment() {
             is SearchProductViewState.Loading -> {
                 if (viewState.firstOpen) binding.progress.visibility = View.GONE
                 else {
+                    productAdapter.updateList(listOf())
                     binding.msgInformation.visibility = View.GONE
                     binding.progress.visibility = View.VISIBLE
                 }
@@ -92,9 +95,9 @@ class SearchProductFragment : Fragment() {
 
     private fun initListeners() {
         binding.apply {
-            searchView.editText.setOnEditorActionListener { query, actionId, event ->
+            searchView.editText.setOnEditorActionListener { query, _, _ ->
                 val text = query?.text.toString()
-                searchBar.setText(text);
+                searchBar.setText(text)
                 searchView.hide()
                 if (text.isNotEmpty())
                     searchProductViewModel.handleIntent(UserIntent.SearchProduct(text))
