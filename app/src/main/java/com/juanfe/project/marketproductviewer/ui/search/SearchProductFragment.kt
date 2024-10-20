@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -53,21 +54,29 @@ class SearchProductFragment : Fragment() {
     private fun updateUi(viewState: SearchProductViewState) {
         when (viewState) {
             is SearchProductViewState.Error -> {
-                binding.productRv.visibility = View.GONE
                 binding.msgInformation.visibility = View.VISIBLE
                 binding.msgInformation.text = viewState.errorMsg
+                hideLoading(visibleRv = false)
             }
 
-            SearchProductViewState.Loading -> {
-                //handleLoading
+            is SearchProductViewState.Loading -> {
+                if (viewState.firstOpen) binding.progress.visibility = View.GONE
+                else {
+                    binding.msgInformation.visibility = View.GONE
+                    binding.progress.visibility = View.VISIBLE
+                }
             }
 
             is SearchProductViewState.Success -> {
-                binding.productRv.visibility = View.VISIBLE
                 productAdapter.updateList(viewState.resultModel)
-                binding.msgInformation.visibility = View.GONE
+                hideLoading(visibleRv = true)
             }
         }
+    }
+
+    private fun hideLoading(visibleRv: Boolean, visibleProgress: Boolean = false) {
+        binding.productRv.isVisible = visibleRv
+        binding.progress.isVisible = visibleProgress
     }
 
     private fun setUpRecyclerView() {
@@ -87,7 +96,8 @@ class SearchProductFragment : Fragment() {
                 val text = query?.text.toString()
                 searchBar.setText(text);
                 searchView.hide()
-                searchProductViewModel.handleIntent(UserIntent.SearchProduct(text))
+                if (text.isNotEmpty())
+                    searchProductViewModel.handleIntent(UserIntent.SearchProduct(text))
                 true
             }
         }

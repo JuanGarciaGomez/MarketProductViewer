@@ -7,7 +7,7 @@ import com.juanfe.project.marketproductviewer.domain.ExceptionService
 import com.juanfe.project.marketproductviewer.domain.SearchModel
 import com.juanfe.project.marketproductviewer.domain.SearchProductRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import toDomain
+import com.juanfe.project.marketproductviewer.data.network.toDomain
 import java.net.UnknownHostException
 import javax.inject.Inject
 

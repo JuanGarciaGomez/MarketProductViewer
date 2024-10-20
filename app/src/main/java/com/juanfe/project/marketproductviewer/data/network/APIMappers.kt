@@ -1,3 +1,5 @@
+package com.juanfe.project.marketproductviewer.data.network
+
 import com.juanfe.project.marketproductviewer.data.network.response.InstallmentsResponse
 import com.juanfe.project.marketproductviewer.data.network.response.PagingResponse
 import com.juanfe.project.marketproductviewer.data.network.response.ResultResponse
@@ -35,7 +37,7 @@ fun ResultResponse.toDomain() =
         permalink = permalink,
         thumbnail = thumbnail,
         price = price,
-        originalPrice = originalPrice ?: 0.0,
+        originalPrice = originalPrice,
         shipping = shipping.toDomain(),
         installments = installments?.toDomain(),
 

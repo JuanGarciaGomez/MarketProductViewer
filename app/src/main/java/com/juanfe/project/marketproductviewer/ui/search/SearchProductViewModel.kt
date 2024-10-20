@@ -17,8 +17,7 @@ class SearchProductViewModel @Inject constructor(private val searchProductUseCas
     ViewModel() {
 
 
-    private val _viewState =
-        MutableStateFlow<SearchProductViewState>(SearchProductViewState.Loading)
+    private val _viewState = MutableStateFlow<SearchProductViewState>(SearchProductViewState.Loading(firstOpen = true))
     val viewState: StateFlow<SearchProductViewState> = _viewState
 
     fun handleIntent(intent: UserIntent) {
@@ -29,7 +28,7 @@ class SearchProductViewModel @Inject constructor(private val searchProductUseCas
 
     private fun search(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _viewState.value = SearchProductViewState.Loading
+            _viewState.value = SearchProductViewState.Loading()
             val result = searchProductUseCase.invoke(query)
             result.fold(onSuccess = { searchProduct ->
                 handleSuccess(searchProduct)
@@ -47,7 +46,8 @@ class SearchProductViewModel @Inject constructor(private val searchProductUseCas
 
     private fun handleSuccess(searchProduct: SearchModel) {
         val productList = searchProduct.results
-        _viewState.value = SearchProductViewState.Success(productList)
+        if (productList.isEmpty()) _viewState.value = SearchProductViewState.Error("No hay productos para esta busqueda")
+        else _viewState.value = SearchProductViewState.Success(productList)
     }
 
 }

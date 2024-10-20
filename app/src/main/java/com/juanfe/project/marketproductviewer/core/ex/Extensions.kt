@@ -19,6 +19,7 @@ fun View.pretty(url: String): RequestBuilder<Drawable> {
         .with(this)
         .load(url)
         .fitCenter()
+        .sizeMultiplier(0.5f)
         .placeholder(R.mipmap.ic_launcher_round)
 }
 

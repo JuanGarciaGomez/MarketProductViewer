@@ -11,12 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:ellipsize="end"
-        android:text="@string/search_something"
         android:elevation="5dp"
+        android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="1"
+        android:text="@string/search_something"
         android:textSize="12sp" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:indicatorColor="@color/primary"
+        android:indeterminate="true" />
 
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
