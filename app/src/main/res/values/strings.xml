@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MarketProductViewer</string>
+    <string name="search_something">Busca lo que necesites :)</string>
+    <string name="search_product">Buscar prodcuto</string>
+    <string name="image_product">image</string>
+
+
+    <!-- Error Service -->
+    <string name="unknown_error">Error Inesperado</string>
+    <string name="client_error">Error del cliente</string>
+    <string name="server_error">Error del servidor</string>
+    <string name="internet_error">No hay conexión de internet</string>
+
+
 </resources>
