@@ -52,7 +52,7 @@
                 android:id="@+id/prod_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="16dp"
                 android:gravity="start"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -66,7 +66,7 @@
                 android:id="@+id/container_img"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                android:layout_margin="8dp"
+                android:layout_margin="16dp"
                 android:backgroundTint="@color/white"
                 app:cardElevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
                 android:id="@+id/more_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginHorizontal="16dp"
                 android:paddingBottom="32dp"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
@@ -99,18 +99,18 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/prod_original_price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:gravity="start"
+                    android:textColor="@color/strong_gray"
+                    android:textSize="12sp"
                     tools:text="1000" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/product_price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -119,10 +119,10 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/prod_installments"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     tools:text="En 3 cuotra de 29 con 0 interes" />
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:drawableEndCompat="@drawable/location"

@@ -119,6 +119,7 @@ class SearchProductFragment : Fragment() {
         searchHistoryAdapter = SearchHistoryAdapter(listOf()) { query, search ->
             if (search) {
                 searchProductViewModel.handleIntent(UserIntent.SearchProduct(query))
+                binding.searchBar.setText(query)
                 binding.searchView.hide()
             } else {
                 binding.searchView.setText(query)
