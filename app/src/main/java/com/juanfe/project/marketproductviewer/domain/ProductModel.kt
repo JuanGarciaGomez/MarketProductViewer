@@ -28,16 +28,17 @@ data class ResultModel(
     val originalPrice: Double,
     val shipping: ShippingModel,
     val installments: InstallmentsModel? = null,
-): Parcelable
+) : Parcelable
+
 @Parcelize
 data class InstallmentsModel(
     val quantity: Int,
     val amount: Double,
     val rate: Int,
     val currencyId: String,
-): Parcelable
+) : Parcelable
 
 @Parcelize
 data class ShippingModel(
     val freeShipping: Boolean,
-): Parcelable
+) : Parcelable

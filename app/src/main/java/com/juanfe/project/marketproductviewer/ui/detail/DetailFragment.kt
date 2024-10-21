@@ -108,7 +108,7 @@ class DetailFragment : Fragment() {
 
     private fun shareProduct() {
         val url = product.permalink
-        val shareMessage = "¡Echa un vistazo a este producto: $url"
+        val shareMessage = getString(R.string.look_product) + url
 
         val intent = Intent().apply {
             action = Intent.ACTION_SEND

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.core.ex.formatToCOP
 import com.juanfe.project.marketproductviewer.core.ex.loadProductImg
 import com.juanfe.project.marketproductviewer.databinding.ItemProductBinding
@@ -52,7 +53,6 @@ class ProductAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ResultModel, onItemSelected: (ResultModel) -> Unit) {
             binding.apply {
-                val freeDelivery = "Envio Gratis"
                 productTitle.text = item.title
 
                 if (item.originalPrice.formatToCOP() != item.price.formatToCOP()) {
@@ -65,7 +65,7 @@ class ProductAdapter(
                 productPrice.text = item.price.formatToCOP()
 
                 if (item.shipping.freeShipping) {
-                    productShipping.text = freeDelivery
+                    productShipping.text = root.context.getString(R.string.free_delivery)
                 } else {
                     productShipping.visibility = View.GONE
                 }

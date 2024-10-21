@@ -59,7 +59,7 @@ class SearchProductFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchProductViewModel.searchHistory.collect { allHistory ->
-                    Log.e("History", allHistory.toString())
+                    Log.i("History", allHistory.toString())
                     if (allHistory != null)
                         searchHistoryAdapter.updateList(allHistory)
                 }

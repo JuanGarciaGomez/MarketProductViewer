@@ -18,6 +18,8 @@
     <string name="add_car">Agregar al carrito</string>
     <string name="soon">Pronto</string>
     <string name="very_soon">Muy Pronto</string>
+    <string name="no_products">No hay productos para esta busqueda</string>
+    <string name="look_product">¡Echa un vistazo a este producto:</string>
 
 
 </resources>

@@ -1,12 +1,15 @@
 package com.juanfe.project.marketproductviewer.ui.search
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.domain.ExceptionService
 import com.juanfe.project.marketproductviewer.domain.GetSearchHistoryUseCase
 import com.juanfe.project.marketproductviewer.domain.SearchModel
 import com.juanfe.project.marketproductviewer.domain.SearchProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchProductViewModel @Inject constructor(
     private val searchProductUseCase: SearchProductUseCase,
-    private val getSearchHistoryUseCase: GetSearchHistoryUseCase
+    private val getSearchHistoryUseCase: GetSearchHistoryUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
 
@@ -63,7 +67,7 @@ class SearchProductViewModel @Inject constructor(
     private fun handleSuccess(searchProduct: SearchModel) {
         val productList = searchProduct.results
         if (productList.isEmpty()) _viewState.value =
-            SearchProductViewState.Error("No hay productos para esta busqueda")
+            SearchProductViewState.Error(context.getString(R.string.no_products))
         else _viewState.value = SearchProductViewState.Success(productList)
     }
 
