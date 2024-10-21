@@ -80,6 +80,9 @@ dependencies {
     implementation(libs.glide)
     ksp(libs.compiler)
 
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
+
     implementation(libs.logging.interceptor)
     implementation(libs.glide.transformations)
 

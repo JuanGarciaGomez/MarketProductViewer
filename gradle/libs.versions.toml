@@ -1,6 +1,7 @@
 [versions]
 agp = "8.4.2"
 coreTesting = "2.2.0"
+datastorePreferences = "1.1.1"
 glideTransformations = "4.3.0"
 kotlin = "1.9.24"
 coreKtx = "1.13.1"
@@ -33,6 +34,7 @@ turbine = "0.8.0"
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-transformations = { module = "jp.wasabeef:glide-transformations", version.ref = "glideTransformations" }
