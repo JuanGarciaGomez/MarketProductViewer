@@ -1,4 +1,4 @@
-package com.juanfe.project.marketproductviewer.ui.search.adapter
+package com.juanfe.project.marketproductviewer.ui.search.adapter.product
 
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.core.ex.formatToCOP
 import com.juanfe.project.marketproductviewer.core.ex.loadProductImg
 import com.juanfe.project.marketproductviewer.databinding.ItemProductBinding
@@ -14,7 +15,7 @@ import com.juanfe.project.marketproductviewer.domain.ResultModel
 
 class ProductAdapter(
     private var list: List<ResultModel>,
-    private val onItemSelected: (String) -> Unit
+    private val onItemSelected: (ResultModel) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
 
     fun updateList(newList: List<ResultModel>) {
@@ -50,9 +51,8 @@ class ProductAdapter(
 
     class MyViewHolder(private val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ResultModel, onItemSelected: (String) -> Unit) {
+        fun bind(item: ResultModel, onItemSelected: (ResultModel) -> Unit) {
             binding.apply {
-                val freeDelivery = "Envio Gratis"
                 productTitle.text = item.title
 
                 if (item.originalPrice.formatToCOP() != item.price.formatToCOP()) {
@@ -64,19 +64,17 @@ class ProductAdapter(
                 }
                 productPrice.text = item.price.formatToCOP()
 
-                item.installments?.quantity?.let {
-                    productInstallments.text = it.toString()
-                } ?: run {
-                    productInstallments.visibility = View.GONE
-                }
-
                 if (item.shipping.freeShipping) {
-                    productShipping.text = freeDelivery
+                    productShipping.text = root.context.getString(R.string.free_delivery)
                 } else {
                     productShipping.visibility = View.GONE
                 }
 
                 productImg.loadProductImg(item.thumbnail)
+
+                product.setOnClickListener {
+                    onItemSelected.invoke(item)
+                }
             }
         }
 

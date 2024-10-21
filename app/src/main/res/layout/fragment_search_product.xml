@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.search.SearchProductFragment">
 
     <TextView
@@ -15,7 +16,6 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:text="@string/search_something"
         android:textSize="12sp" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -69,7 +69,17 @@
         android:hint="@string/search_product"
         app:layout_anchor="@id/search_bar">
 
-        <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:listitem="@layout/item_product" />
 
     </com.google.android.material.search.SearchView>
 

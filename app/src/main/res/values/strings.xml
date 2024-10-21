@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MarketProductViewer</string>
     <string name="search_something">Busca lo que necesites :)</string>
-    <string name="search_product">Buscar prodcuto</string>
+    <string name="search_product">Buscar producto</string>
     <string name="image_product">image</string>
 
 
@@ -10,6 +10,16 @@
     <string name="client_error">Error del cliente</string>
     <string name="server_error">Error del servidor</string>
     <string name="internet_error">No hay conexión de internet</string>
+    <string name="delivery">Envio a nivel nacional</string>
+    <string name="free_delivery">Envío gratis</string>
+    <string name="all_country">a todo el país</string>
+    <string name="image">image</string>
+    <string name="buy_now">Comprar ahora</string>
+    <string name="add_car">Agregar al carrito</string>
+    <string name="soon">Pronto</string>
+    <string name="very_soon">Muy Pronto</string>
+    <string name="no_products">No hay productos para esta busqueda</string>
+    <string name="look_product">¡Echa un vistazo a este producto:</string>
 
 
 </resources>

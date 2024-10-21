@@ -11,9 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.search.SearchView.TransitionState
+import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.databinding.FragmentSearchProductBinding
-import com.juanfe.project.marketproductviewer.ui.search.adapter.ProductAdapter
+import com.juanfe.project.marketproductviewer.ui.search.adapter.product.ProductAdapter
+import com.juanfe.project.marketproductviewer.ui.search.adapter.search.SearchHistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -24,6 +28,7 @@ class SearchProductFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var productAdapter: ProductAdapter
+    private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
     private val searchProductViewModel: SearchProductViewModel by viewModels()
 
@@ -50,6 +55,16 @@ class SearchProductFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchProductViewModel.searchHistory.collect { allHistory ->
+                    Log.i("History", allHistory.toString())
+                    if (allHistory != null)
+                        searchHistoryAdapter.updateList(allHistory)
+                }
+            }
+        }
     }
 
     private fun updateUi(viewState: SearchProductViewState) {
@@ -62,8 +77,11 @@ class SearchProductFragment : Fragment() {
             }
 
             is SearchProductViewState.Loading -> {
-                if (viewState.firstOpen) binding.progress.visibility = View.GONE
-                else {
+                if (viewState.firstOpen) {
+                    binding.progress.visibility = View.GONE
+                    binding.msgInformation.text =
+                        requireContext().getString(R.string.search_something)
+                } else {
                     productAdapter.updateList(listOf())
                     binding.msgInformation.visibility = View.GONE
                     binding.progress.visibility = View.VISIBLE
@@ -83,18 +101,44 @@ class SearchProductFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
+        // Rv - products from the api
+
         binding.productRv.layoutManager = LinearLayoutManager(requireContext())
 
-        //I can save de first search for when the user re open the app he have the last search
         productAdapter = ProductAdapter(listOf()) {
-            // findNavController().navigate(navigate)
-
+            val action =
+                SearchProductFragmentDirections.actionSearchProductFragmentToDetailFragment(it)
+            findNavController().navigate(action)
         }
         binding.productRv.adapter = productAdapter
+
+
+        // Rv - history products from the dataStore
+        binding.historyRv.layoutManager = LinearLayoutManager(requireContext())
+
+        searchHistoryAdapter = SearchHistoryAdapter(listOf()) { query, search ->
+            if (search) {
+                searchProductViewModel.handleIntent(UserIntent.SearchProduct(query))
+                binding.searchBar.setText(query)
+                binding.searchView.hide()
+            } else {
+                binding.searchView.setText(query)
+                binding.searchBar.setText(query)
+            }
+        }
+        binding.historyRv.adapter = searchHistoryAdapter
+
     }
 
     private fun initListeners() {
         binding.apply {
+
+            searchView.addTransitionListener { _, transitionState, _ ->
+                if (transitionState == TransitionState.SHOWING) {
+                    searchProductViewModel.handleIntent(UserIntent.TapSearch)
+                }
+            }
+
             searchView.editText.setOnEditorActionListener { query, _, _ ->
                 val text = query?.text.toString()
                 searchBar.setText(text)
