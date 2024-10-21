@@ -14,6 +14,10 @@
     <string name="free_delivery">Envío gratis</string>
     <string name="all_country">a todo el país</string>
     <string name="image">image</string>
+    <string name="buy_now">Comprar ahora</string>
+    <string name="add_car">Agregar al carrito</string>
+    <string name="soon">Pronto</string>
+    <string name="very_soon">Muy Pronto</string>
 
 
 </resources>
