@@ -118,7 +118,7 @@ class DetailFragment : Fragment() {
             val msgInstallments = "en"
             binding.prodInstallments.text = msgInstallments.span(
                 requireContext(),
-                "${installments.quantity} cuotas de $${installments.amount.formatToCOP()} con ${installments.rate}% interés",
+                "${installments.quantity} cuotas de ${installments.amount.formatToCOP()} con ${installments.rate}% interés",
                 SpanTarget.SELECTED_PART
             )
         } else binding.prodInstallments.visibility = View.GONE

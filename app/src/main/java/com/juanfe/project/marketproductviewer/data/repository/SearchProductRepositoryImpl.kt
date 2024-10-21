@@ -11,6 +11,7 @@ import com.juanfe.project.marketproductviewer.domain.SearchProductRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -58,8 +59,11 @@ class SearchProductRepositoryImpl @Inject constructor(
         dataStoreManager.saveSearch(updatedHistory)
     }
 
-    override fun getSearchHistoryProducts(): Flow<String> {
-        return dataStoreManager.allHistory
+    override fun getSearchHistoryProducts(): Flow<List<String>> {
+        return dataStoreManager.allHistory.map { history ->
+            if (history.isEmpty()) listOf()
+            else history.split(",")
+        }
     }
 
     /**

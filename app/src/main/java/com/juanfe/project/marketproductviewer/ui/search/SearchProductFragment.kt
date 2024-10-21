@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.search.SearchView.TransitionState
 import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.databinding.FragmentSearchProductBinding
-import com.juanfe.project.marketproductviewer.ui.search.adapter.ProductAdapter
+import com.juanfe.project.marketproductviewer.ui.search.adapter.product.ProductAdapter
+import com.juanfe.project.marketproductviewer.ui.search.adapter.search.SearchHistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,6 +28,7 @@ class SearchProductFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var productAdapter: ProductAdapter
+    private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
     private val searchProductViewModel: SearchProductViewModel by viewModels()
 
@@ -57,8 +59,9 @@ class SearchProductFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchProductViewModel.searchHistory.collect { allHistory ->
-                    // Obtener los datos
-                    Log.e("Historial", allHistory.toString())
+                    Log.e("History", allHistory.toString())
+                    if (allHistory != null)
+                        searchHistoryAdapter.updateList(allHistory)
                 }
             }
         }
@@ -98,6 +101,8 @@ class SearchProductFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
+        // Rv - products from the api
+
         binding.productRv.layoutManager = LinearLayoutManager(requireContext())
 
         productAdapter = ProductAdapter(listOf()) {
@@ -106,6 +111,22 @@ class SearchProductFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.productRv.adapter = productAdapter
+
+
+        // Rv - history products from the dataStore
+        binding.historyRv.layoutManager = LinearLayoutManager(requireContext())
+
+        searchHistoryAdapter = SearchHistoryAdapter(listOf()) { query, search ->
+            if (search) {
+                searchProductViewModel.handleIntent(UserIntent.SearchProduct(query))
+                binding.searchView.hide()
+            } else {
+                binding.searchView.setText(query)
+                binding.searchBar.setText(query)
+            }
+        }
+        binding.historyRv.adapter = searchHistoryAdapter
+
     }
 
     private fun initListeners() {

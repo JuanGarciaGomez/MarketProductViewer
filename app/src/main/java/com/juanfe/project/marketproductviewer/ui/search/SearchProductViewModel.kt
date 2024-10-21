@@ -20,8 +20,8 @@ class SearchProductViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _searchHistory = MutableStateFlow<String?>(null)
-    val searchHistory: StateFlow<String?> get() = _searchHistory
+    private val _searchHistory = MutableStateFlow<List<String>?>(null)
+    val searchHistory: StateFlow<List<String>?> get() = _searchHistory
 
     private val _viewState =
         MutableStateFlow<SearchProductViewState>(SearchProductViewState.Loading(firstOpen = true))

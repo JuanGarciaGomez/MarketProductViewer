@@ -1,4 +1,4 @@
-package com.juanfe.project.marketproductviewer.ui.search.adapter
+package com.juanfe.project.marketproductviewer.ui.search.adapter.product
 
 import android.graphics.Paint
 import android.view.LayoutInflater

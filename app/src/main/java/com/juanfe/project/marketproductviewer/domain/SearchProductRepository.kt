@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchProductRepository {
     suspend fun searchProduct(query: String): Result<SearchModel>
-    fun getSearchHistoryProducts(): Flow<String>
+
+    fun getSearchHistoryProducts(): Flow<List<String>>
 
 }

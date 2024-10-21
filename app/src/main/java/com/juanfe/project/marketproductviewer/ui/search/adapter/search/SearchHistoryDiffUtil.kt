@@ -1,12 +1,11 @@
-package com.juanfe.project.marketproductviewer.ui.search.adapter
+package com.juanfe.project.marketproductviewer.ui.search.adapter.search
 
 import androidx.recyclerview.widget.DiffUtil
-import com.juanfe.project.marketproductviewer.domain.ResultModel
 
 
-class ProductDiffUtil(
-    private val oldList: List<ResultModel>,
-    private val newList: List<ResultModel>
+class SearchHistoryDiffUtil(
+    private val oldList: List<String>,
+    private val newList: List<String>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 
@@ -14,13 +13,12 @@ class ProductDiffUtil(
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         // I can use whatever validations that i need
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
 
         return oldList[oldItemPosition] == newList[newItemPosition]
     }
-
 
 }
