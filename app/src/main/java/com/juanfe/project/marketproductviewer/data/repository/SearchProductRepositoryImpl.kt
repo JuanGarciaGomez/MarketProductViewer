@@ -80,10 +80,14 @@ class SearchProductRepositoryImpl @Inject constructor(
     private fun removeDuplicatesAndJoin(query: String, currentHistory: String): String {
         val finalHistory = if (currentHistory.isEmpty()) mutableSetOf()
         else currentHistory.split(",").toMutableSet()
+
         if (query.isNotBlank()) {
             finalHistory.add(query.trim())
         }
-        return finalHistory.joinToString(",").trim()
+
+        val finalList = listOf(query.trim()) + finalHistory.toList().filter { it != query.trim() }
+
+        return finalList.joinToString(",").trim()
     }
 }
 
