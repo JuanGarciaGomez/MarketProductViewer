@@ -3,6 +3,7 @@ package com.juanfe.project.marketproductviewer.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanfe.project.marketproductviewer.domain.ExceptionService
+import com.juanfe.project.marketproductviewer.domain.GetSearchHistoryUseCase
 import com.juanfe.project.marketproductviewer.domain.SearchModel
 import com.juanfe.project.marketproductviewer.domain.SearchProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,16 +14,31 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchProductViewModel @Inject constructor(private val searchProductUseCase: SearchProductUseCase) :
-    ViewModel() {
+class SearchProductViewModel @Inject constructor(
+    private val searchProductUseCase: SearchProductUseCase,
+    private val getSearchHistoryUseCase: GetSearchHistoryUseCase
+) : ViewModel() {
 
 
-    private val _viewState = MutableStateFlow<SearchProductViewState>(SearchProductViewState.Loading(firstOpen = true))
+    private val _searchHistory = MutableStateFlow<String?>(null)
+    val searchHistory: StateFlow<String?> get() = _searchHistory
+
+    private val _viewState =
+        MutableStateFlow<SearchProductViewState>(SearchProductViewState.Loading(firstOpen = true))
     val viewState: StateFlow<SearchProductViewState> = _viewState
 
     fun handleIntent(intent: UserIntent) {
         when (intent) {
             is UserIntent.SearchProduct -> search(intent.query)
+            UserIntent.TapSearch -> getAllHistory()
+        }
+    }
+
+    private fun getAllHistory() {
+        viewModelScope.launch {
+            getSearchHistoryUseCase.invoke().collect { history ->
+                _searchHistory.value = history
+            }
         }
     }
 
@@ -46,7 +62,8 @@ class SearchProductViewModel @Inject constructor(private val searchProductUseCas
 
     private fun handleSuccess(searchProduct: SearchModel) {
         val productList = searchProduct.results
-        if (productList.isEmpty()) _viewState.value = SearchProductViewState.Error("No hay productos para esta busqueda")
+        if (productList.isEmpty()) _viewState.value =
+            SearchProductViewState.Error("No hay productos para esta busqueda")
         else _viewState.value = SearchProductViewState.Success(productList)
     }
 

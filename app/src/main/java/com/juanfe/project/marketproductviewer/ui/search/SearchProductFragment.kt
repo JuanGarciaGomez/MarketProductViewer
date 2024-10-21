@@ -1,6 +1,7 @@
 package com.juanfe.project.marketproductviewer.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.search.SearchView.TransitionState
 import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.databinding.FragmentSearchProductBinding
 import com.juanfe.project.marketproductviewer.ui.search.adapter.ProductAdapter
@@ -48,6 +50,15 @@ class SearchProductFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchProductViewModel.viewState.collect { viewState ->
                     updateUi(viewState)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchProductViewModel.searchHistory.collect { allHistory ->
+                    // Obtener los datos
+                    Log.e("Historial", allHistory.toString())
                 }
             }
         }
@@ -99,6 +110,13 @@ class SearchProductFragment : Fragment() {
 
     private fun initListeners() {
         binding.apply {
+
+            searchView.addTransitionListener { _, transitionState, _ ->
+                if (transitionState == TransitionState.SHOWING) {
+                    searchProductViewModel.handleIntent(UserIntent.TapSearch)
+                }
+            }
+
             searchView.editText.setOnEditorActionListener { query, _, _ ->
                 val text = query?.text.toString()
                 searchBar.setText(text)
