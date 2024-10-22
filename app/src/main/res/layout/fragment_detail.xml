@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    tools:context=".ui.detail.DetailFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="32dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primary"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/ic_back"
+                    style="@style/IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/arrow_back" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/ic_share"
+                    style="@style/IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/share" />
+
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/prod_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="start"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header"
+                tools:text="MacBook air M3" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/carousel_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="280dp"
+                android:layout_margin="16dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:carousel_alignment="center"
+                app:layout_constraintBottom_toTopOf="@id/more_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/prod_name" />
+
+            <LinearLayout
+                android:id="@+id/more_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btn_buy"
+                app:layout_constraintTop_toBottomOf="@id/carousel_recycler_view">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/prod_original_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textColor="@color/strong_gray"
+                    android:textSize="12sp"
+                    tools:text="1000" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/product_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="5000" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/prod_installments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="start"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    tools:text="En 3 cuotra de 29 con 0 interes" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/prod_delivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="start"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:drawableEndCompat="@drawable/location"
+                    tools:text="Envio gratis a todo el país" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_buy"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:textColor="@color/white"
+                android:text="@string/buy_now"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/more_info" />
+
+            <Button
+                android:id="@+id/btn_car"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_height="55dp"
+                android:textColor="@color/blue"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/add_car"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_buy" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
