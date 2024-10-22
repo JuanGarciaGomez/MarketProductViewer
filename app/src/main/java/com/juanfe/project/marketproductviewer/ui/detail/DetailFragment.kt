@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -53,6 +55,11 @@ class DetailFragment : Fragment() {
         initUi()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.top_app_bar, menu)
+    }
+
     private fun initUi() {
         initListeners()
         initObservers()
@@ -81,20 +88,26 @@ class DetailFragment : Fragment() {
 
     private fun initListeners() {
         binding.apply {
-            icBack.setOnClickListener {
+            topAppBar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
+            topAppBar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.share -> {
+                        shareProduct()
+                        true
+                    }
 
-            icShare.setOnClickListener {
-                shareProduct()
+                    else -> false
+                }
             }
 
-            btnBuy.setOnClickListener{
-                Toast.makeText(requireContext(), getString(R.string.soon),Toast.LENGTH_SHORT).show()
+            btnBuy.setOnClickListener {
+                Toast.makeText(requireContext(), getString(R.string.soon), Toast.LENGTH_SHORT).show()
             }
 
             btnCar.setOnClickListener {
-                Toast.makeText(requireContext(), getString(R.string.very_soon),Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.very_soon), Toast.LENGTH_SHORT).show()
             }
 
         }
