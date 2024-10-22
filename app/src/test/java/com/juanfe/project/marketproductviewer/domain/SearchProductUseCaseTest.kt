@@ -5,7 +5,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 class SearchProductUseCaseTest {
@@ -53,7 +53,7 @@ class SearchProductUseCaseTest {
             )
         )
 
-        Mockito.`when`(searchProductRepository.searchProduct("mac"))
+        `when`(searchProductRepository.searchProduct("mac"))
             .thenReturn(Result.success(mockSearchModel))
 
         val result = searchProductUseCase.invoke("mac")

@@ -29,13 +29,13 @@ class GetSearchHistoryUseCaseTest {
     fun `invoke should return search history`() = runTest {
         val mockHistory = listOf("Search 1", "Search 2")
 
-        // Simula la devolución del flujo de datos desde el repositorio
+        //Arrange
         `when`(searchProductRepository.getSearchHistoryProducts()).thenReturn(flowOf(mockHistory))
 
-        // Llama al caso de uso
+        //Act
         val result = getSearchHistoryUseCase.invoke().first()
 
-        // Verifica que el resultado sea el esperado
+        //Assert
         assertEquals(mockHistory, result)
     }
 }
