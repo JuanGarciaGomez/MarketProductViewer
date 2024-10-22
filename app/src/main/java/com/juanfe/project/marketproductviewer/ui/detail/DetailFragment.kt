@@ -14,10 +14,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.carousel.CarouselLayoutManager
+import com.google.android.material.carousel.CarouselSnapHelper
+import com.google.android.material.carousel.HeroCarouselStrategy
 import com.juanfe.project.marketproductviewer.R
 import com.juanfe.project.marketproductviewer.core.ex.SpanTarget
 import com.juanfe.project.marketproductviewer.core.ex.formatToCOP
-import com.juanfe.project.marketproductviewer.core.ex.loadProductImg
 import com.juanfe.project.marketproductviewer.core.ex.span
 import com.juanfe.project.marketproductviewer.databinding.FragmentDetailBinding
 import com.juanfe.project.marketproductviewer.domain.ResultModel
@@ -31,6 +33,8 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val detailViewModel: DetailViewModel by viewModels()
+    private lateinit var carouselDetailAdapter: CarouselDetailAdapter
+
 
     private val args: DetailFragmentArgs by navArgs()
     private lateinit var product: ResultModel
@@ -98,13 +102,33 @@ class DetailFragment : Fragment() {
 
     private fun drawProduct() {
         binding.apply {
+            setUpRecyclerView(product.thumbnail)
             prodName.text = product.title
-            prodImg.loadProductImg(product.thumbnail)
             validatePrice()
             handleInstallments()
             validateShipping()
         }
     }
+
+    private fun setUpRecyclerView(thumbnail: String) {
+        val layoutManager =
+            object : CarouselLayoutManager(HeroCarouselStrategy()) {
+                override fun canScrollVertically(): Boolean = false
+            }.apply {
+                carouselAlignment = CarouselLayoutManager.ALIGNMENT_CENTER
+            }
+        binding.carouselRecyclerView.layoutManager = layoutManager
+
+        carouselDetailAdapter = CarouselDetailAdapter(listOf(thumbnail, thumbnail))
+        binding.carouselRecyclerView.adapter = carouselDetailAdapter
+
+        // Checks if an OnFlingListener is already assigned and if it is of type CarouselSnapHelper
+        if (binding.carouselRecyclerView.onFlingListener !is CarouselSnapHelper) {
+            val snapHelper = CarouselSnapHelper()
+            snapHelper.attachToRecyclerView(binding.carouselRecyclerView)
+        }
+    }
+
 
     private fun shareProduct() {
         val url = product.permalink
