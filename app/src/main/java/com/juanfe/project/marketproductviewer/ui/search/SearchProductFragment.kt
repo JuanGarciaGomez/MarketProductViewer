@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,6 +33,8 @@ class SearchProductFragment : Fragment() {
 
     private val searchProductViewModel: SearchProductViewModel by viewModels()
 
+    private var searchViewOpen = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +48,23 @@ class SearchProductFragment : Fragment() {
         initListeners()
         initObservers()
         setUpRecyclerView()
+        onBack()
+    }
+
+    private fun onBack() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (searchViewOpen) {
+                        binding.searchView.hide()
+                        searchViewOpen = false
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            })
     }
 
     private fun initObservers() {
@@ -135,6 +155,7 @@ class SearchProductFragment : Fragment() {
 
             searchView.addTransitionListener { _, transitionState, _ ->
                 if (transitionState == TransitionState.SHOWING) {
+                    searchViewOpen = true
                     searchProductViewModel.handleIntent(UserIntent.TapSearch)
                 }
             }
