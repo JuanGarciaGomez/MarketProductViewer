@@ -20,7 +20,8 @@
             <LinearLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center"
                 android:background="@color/primary"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
